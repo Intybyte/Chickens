@@ -1,7 +1,6 @@
 ﻿using BepInEx;
+using Chickens.Loader;
 using System.Collections;
-using System.Reflection;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Chickens
@@ -29,18 +28,18 @@ namespace Chickens
             } catch {                
                 goto X;
             }
-       
-            EggLoader.LoadEgg();
+
+            CageLoader.LoadCage();
             yield break;
         }
 
         public void Update() 
         {
-            if(Input.GetMouseButton(0) && Input.GetMouseButton(1) && Input.GetKey(KeyCode.K)) 
-            {
-                Vector3 vector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                vector.z = 0;
-                GameObject obj = Instantiate(EggLoader.EGG_prefab, vector, Quaternion.identity);
+            bool bothMouse = Input.GetMouseButton(0) && Input.GetMouseButton(1);
+            Vector3 vector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            vector.z = 0;
+            if (bothMouse && Input.GetKey(KeyCode.L)) {
+                GameObject obj = Instantiate(CageLoader.CagePrefab, vector, Quaternion.identity);
                 obj.SetActive(true);
             }
         }
